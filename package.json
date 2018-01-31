@@ -1,0 +1,25 @@
+{
+  "name": "melonchallenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ava": "^0.25.0",
+    "chai": "^4.1.2",
+    "ganache-cli": "^6.0.3",
+    "mocha": "^5.0.0",
+    "solc": "^0.4.19",
+    "solium": "^1.1.3",
+    "truffle-hdwallet-provider": "0.0.3",
+    "web3": "^1.0.0-beta.26"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-plugin-ava": "^4.5.0"
+  }
+}
