@@ -17,14 +17,14 @@ const simpleCertifierAbi = fs.readFileSync('././out/contracts/SimpleCertifier.ab
 let compliance;
 let picopsAddress;
 let complianceAddress;
-let simplecertifer;
+let simplecertifier;
 
 const deploy = async () => {
   const accounts1 = await web3.eth.getAccounts();
-  simplecertifer = await new web3.eth.Contract(JSON.parse(simpleCertifierAbi))
+  simplecertifier = await new web3.eth.Contract(JSON.parse(simpleCertifierAbi))
     .deploy({ data: `0x${simpleCertifierBin}` })
     .send({ from: accounts1[0], gas: '1000000' });
-  picopsAddress = simplecertifer.options.address;
+  picopsAddress = simplecertifier.options.address;
 
 
   compliance = await new web3.eth.Contract(JSON.parse(complianceInterfaceAbi))
@@ -35,7 +35,7 @@ const deploy = async () => {
 
 
   compliance.setProvider(provider);
-  simplecertifer.setProvider(provider);
+  simplecertifier.setProvider(provider);
 };
 
 test.beforeEach(async () => {
@@ -48,7 +48,7 @@ test('deploys a contract', async (t) => {
 
 test('Checks if subscription is permitted', async (t) => {
   const accounts = await web3.eth.getAccounts();
-  await simplecertifer.methods.certify(accounts[0]).send({ from: accounts[0] });
+  await simplecertifier.methods.certify(accounts[0]).send({ from: accounts[0] });
   const subscriptionPermitted = await compliance.methods
     .isSubscriptionPermitted(accounts[0], 1000000000000000000, 1000000000000000000).call();
   t.is(subscriptionPermitted, true, 'subscription is not permitted');
@@ -56,7 +56,7 @@ test('Checks if subscription is permitted', async (t) => {
 
 test('Checks if redemption permitted', async (t) => {
   const accounts = await web3.eth.getAccounts();
-  await simplecertifer.methods.certify(accounts[0]).send({ from: accounts[0] });
+  await simplecertifier.methods.certify(accounts[0]).send({ from: accounts[0] });
   const redemptionPermitted = await compliance.methods
     .isRedemptionPermitted(accounts[0], 1000000000000000000, 1000000000000000000).call();
   t.is(redemptionPermitted, true, 'redemption is not permitted');
