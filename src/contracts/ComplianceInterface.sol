@@ -7,9 +7,9 @@ import "./SimpleCertifier.sol";
 
 contract ComplianceInterface is SimpleCertifier {
 
-    SimpleCertifier public sc;
+    SimpleCertifier public simplecertifier;
     function ComplianceInterface(address picopsAddress) public {
-        sc = SimpleCertifier(picopsAddress);
+        simplecertifier = SimpleCertifier(picopsAddress);
     }
 
     // PUBLIC VIEW METHODS
@@ -21,7 +21,7 @@ contract ComplianceInterface is SimpleCertifier {
     /// @return Whether identity is eligible to invest in a Melon fund.
 
     function isSubscriptionPermitted(address ofParticipant,uint256 giveQuantity,uint256 shareQuantity) public view returns (bool) {
-        return sc.certified(ofParticipant);
+        return simplecertifier.certified(ofParticipant);
 
     }
 
@@ -31,7 +31,7 @@ contract ComplianceInterface is SimpleCertifier {
     /// @param receiveQuantity Quantity of Melon token times 10 ** 18 requested to receive for shareQuantity
     /// @return Whether identity is eligible to redeem from a Melon fund.
     function isRedemptionPermitted(address ofParticipant,uint256 shareQuantity,uint256 receiveQuantity) public view returns (bool) {
-        return sc.certified(ofParticipant);
+        return simplecertifier.certified(ofParticipant);
 
     }
 }
