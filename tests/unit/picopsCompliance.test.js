@@ -7,11 +7,11 @@ const fs = require('fs');
 const provider = ganache.provider();
 const web3 = new Web3(provider);
 
-const picopsComplianceBin = fs.readFileSync('././out/contracts/picopsCompliance.bin');
-const picopsComplianceAbi = fs.readFileSync('././out/contracts/picopsCompliance.abi');
+const picopsComplianceBin = fs.readFileSync('././out/contracts/__src_contracts_PicopsCompliance_sol_PicopsCompliance.bin');
+const picopsComplianceAbi = fs.readFileSync('././out/contracts/__src_contracts_PicopsCompliance_sol_PicopsCompliance.abi');
 
-const simpleCertifierBin = fs.readFileSync('././out/contracts/SimpleCertifier.bin');
-const simpleCertifierAbi = fs.readFileSync('././out/contracts/SimpleCertifier.abi');
+const simpleCertifierBin = fs.readFileSync('././out/contracts/__src_contracts_SimpleCertifier_sol_SimpleCertifier.bin');
+const simpleCertifierAbi = fs.readFileSync('././out/contracts/__src_contracts_SimpleCertifier_sol_SimpleCertifier.abi');
 
 
 let compliance;
@@ -19,6 +19,7 @@ let picopsAddress;
 let complianceAddress;
 let simpleCertifier;
 
+// Deploying contracts
 const deploy = async () => {
   const accounts1 = await web3.eth.getAccounts();
   simpleCertifier = await new web3.eth.Contract(JSON.parse(simpleCertifierAbi))
@@ -38,9 +39,11 @@ const deploy = async () => {
   simpleCertifier.setProvider(provider);
 };
 
+// Need to run before each test
 test.beforeEach(async () => {
   await deploy();
 });
+
 
 test('deploys a contract', async (t) => {
   await t.truthy(complianceAddress);
