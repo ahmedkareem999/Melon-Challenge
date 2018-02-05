@@ -17,7 +17,8 @@ contract PicopsCompliance is SimpleCertifier {
     /// @param shareQuantity Quantity of shares times 10 ** 18 requested to be received
     /// @return Whether identity is eligible to invest in a Melon fund.
 
-    function isSubscriptionPermitted(address ofParticipant,
+    function isSubscriptionPermitted(
+        address ofParticipant,
         uint256 giveQuantity,
         uint256 shareQuantity)
       public view returns (bool) {
