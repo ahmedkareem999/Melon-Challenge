@@ -51,16 +51,24 @@ test('deploys a contract', async (t) => {
 
 test('Checks if subscription is permitted', async (t) => {
   const accounts = await web3.eth.getAccounts();
-  await simpleCertifier.methods.certify(accounts[0]).send({ from: accounts[0] });
+  const beforeSubscriptionPermitted = await compliance.methods
+    .isSubscriptionPermitted(accounts[1], 1000000000000000000, 1000000000000000000).call();
+  t.is(beforeSubscriptionPermitted, false);
+  await simpleCertifier.methods.certify(accounts[1]).send({ from: accounts[0] });
   const subscriptionPermitted = await compliance.methods
-    .isSubscriptionPermitted(accounts[0], 1000000000000000000, 1000000000000000000).call();
+    .isSubscriptionPermitted(accounts[1], 1000000000000000000, 1000000000000000000).call();
   t.is(subscriptionPermitted, true);
 });
 
 test('Checks if redemption permitted', async (t) => {
   const accounts = await web3.eth.getAccounts();
-  await simpleCertifier.methods.certify(accounts[0]).send({ from: accounts[0] });
+
+  const beforeRedemptionPermitted = await compliance.methods
+    .isRedemptionPermitted(accounts[1], 1000000000000000000, 1000000000000000000).call();
+  t.is(beforeRedemptionPermitted, false);
+  await simpleCertifier.methods.certify(accounts[1]).send({ from: accounts[0] });
   const redemptionPermitted = await compliance.methods
-    .isRedemptionPermitted(accounts[0], 1000000000000000000, 1000000000000000000).call();
+    .isRedemptionPermitted(accounts[1], 1000000000000000000, 1000000000000000000).call();
+
   t.is(redemptionPermitted, true);
 });
